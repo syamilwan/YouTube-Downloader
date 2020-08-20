@@ -70,7 +70,7 @@ def GetIPaddress():
 
     def split(word): 
         return [char for char in word] 
-
+    #test
     getMAC = []
     getIP = []
     c=0
