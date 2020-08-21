@@ -36,10 +36,10 @@ def Download(dlLink,directory):
     def my_hook(d):
         if d['status'] == 'finished':
             print('\n## Done downloading')
-            process.set("Idle")
             s = done.get()
             done.set(s+"\n"+xx2)
-            #test
+            process.set("Idle")
+
     ydl_opts = {
         'merge_output_format': True,
         'format': 'bestaudio/best',
@@ -59,13 +59,12 @@ def Download(dlLink,directory):
         'logger': MyLogger(),
         'progress_hooks': [my_hook],
     }
-    global titl
-    titl= '%(title)s'
+    
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:    
         meta = ydl.extract_info(e1.get(), download = False)
         print('\n## Downloading ==>> ' + meta['title'])
+        process.set("Downloading from " + xx2 + str(dlLink))
         xx2 = ydl.prepare_filename(meta)
-        process.set(meta['title'] + str(dlLink))
         ydl.download([dlLink])
 
 def browse_button():
@@ -113,7 +112,7 @@ folder_path = StringVar()
 status = StringVar()
 dlto = StringVar()
 process = StringVar()
-process.set("Idle")
+#process.set("Idle")
 done = StringVar()
 phoneStatus = StringVar()
 win.title("YouTube to Mp3")
